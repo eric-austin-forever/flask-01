@@ -1,1 +1,4 @@
-print('hello world')
+def haha():
+	print(888)
+
+haha()
