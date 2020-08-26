@@ -1,0 +1,46 @@
+{#
+pagination：分页对象
+跳转的时候，指定点url
+#}
+{% macro pagination_show(pagination,endpoint) %}
+    <nav aria-label="Page navigation" class="container">
+        <ul class="pagination">
+            <li {% if not pagination.has_prev %}class="disabled" {% endif %}>
+                <a href="
+
+                        {% if pagination.has_prev %}{{ url_for(endpoint,p = pagination.prev_num,**kwargs) }} {% else %}#{% endif %}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% for pp in pagination.iter_pages() %}
+                {% if pp %}
+                    <li {% if pagination.page == pp %}class="active{% endif %}"><a
+                            href="{{ url_for(endpoint,p=pp,**kwargs) }}">{{ pp }}</a></li>
+                {% else %}
+                    <li><a href="">&hellip;</a></li>
+
+                {% endif %}
+            {% endfor %}
+
+
+
+
+            <li {% if not pagination.has_next %}class="disabled" {% endif %}>
+                <a href="
+
+                        {% if pagination.has_next %}{{ url_for(endpoint,p = pagination.next_num,**kwargs) }} {% else %}#{% endif %}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+{% endmacro %}
+
+
+
+
+
+

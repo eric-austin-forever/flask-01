@@ -1,19 +1,114 @@
 {% extends 'common/base.html' %}
+{% from 'common/macro/macro.html' import pagination_show %}
 
 
 {% block title %}
-博客首页
+    博客首页
 {% endblock %}
 
 
 
 {% block content %}
+    {% if current_user.is_authenticated %}
+        <div class="container">
+            <div class="jumbotron">
+                <h1>欢迎{{ current_user.username }}来到博客空间！</h1>
+                <p>...</p>
+                <p><a class="btn btn-primary btn-lg" href="http://www.elaf.top" role="button">更多</a></p>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <div class="jumbotron">
+                <h1>欢迎来到博客空间！</h1>
+                <p>...</p>
+                <p><a class="btn btn-primary btn-lg" href="http://www.elaf.top" role="button">更多</a></p>
+            </div>
+        </div>
+    {% endif %}
+    {% block page_content %}
+        <style>
+            .box {
+                width: 600px;
+            }
 
-    <div class="container">
-    <div class="jumbotron">
-      <h1>Hello, world!</h1>
-      <p>...</p>
-      <p><a class="btn btn-primary btn-lg" href="http://www.elaf.top" role="button">更多</a></p>
-    </div>
-    </div>
+            .ibox {
+                width: 40px;
+            }
+
+            .kbox {
+                background: forestgreen;
+            {#padding: 20px;#}
+
+
+            }
+
+            .jbox {
+            {#width: 600px;#} margin-top: 30px;
+            }
+
+            .qbox {
+
+            }
+
+            .abox {
+
+            }
+
+            a {
+                text-decoration: none;
+                color: #333;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+        </style>
+        <div class="container box">
+            {{ wtf.quick_form(form) }}
+
+            {% for p in posts %}
+
+                <div class="media jbox">
+                    {#                    <div class="media-left media-middle">#}
+                    {#                        <a href="{{ url_for('main.details') }}">#}
+                    {#                            <img class="media-object img-circle ibox"#}
+                    {#                                 src="{{ url_for('static',filename='uploads/'+p.author.icon) }}" alt="头像">#}
+                    {#                            <h4 class="media-heading qbox " style="float: right">{{ p.author.username }}</h4>#}
+                    {#                        </a>#}
+                    {#                    </div>#}
+                    <a href="{{ url_for('main.details') }}" class="abox">
+                        {#                        <div class="media-body kbox">#}
+                        {##}
+                        {#                            {{ p.content }}#}
+                        {#                        </div>#}
+                        <div class="panel panel-info">
+                            <div class="panel-heading kbox" style="height: 70px">
+                                <a href="{{ url_for('main.details') }}">
+                                    <img class="media-object img-circle ibox"
+                                         src="{{ url_for('static',filename='uploads/'+p.author.icon) }}" alt="头像">
+                                    <h4 class="media-heading qbox ">{{ p.author.username }}</h4>
+                                </a>
+                            </div>
+                            <a href="{{ url_for('main.details') }}">
+                                <div class="panel-body" style="height: 150px">
+                                    {{ p.content }}
+                                </div>
+                            </a>
+                        </div>
+                    </a>
+                </div>
+
+
+
+            {% endfor %}
+
+
+        </div>
+
+        {{ pagination_show(pagination,'main.index') }}
+
+
+
+    {% endblock %}
 {% endblock %}

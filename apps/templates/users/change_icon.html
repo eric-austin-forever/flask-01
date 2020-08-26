@@ -2,16 +2,26 @@
 
 
 {% block title %}
-欢迎登录
+修改头像
 {% endblock %}
 
+
 {% block page_content %}
+    {% if img_url %}
+    <img src="{{ img_url }}" alt="" class="img-circle">
+{% endif %}
     <style>
         .box{
             width: 600px;
         }
     </style>
+
+
     <div class="container box">
         {{ wtf.quick_form(form) }}
+
+
+
+
     </div>
 {% endblock %}

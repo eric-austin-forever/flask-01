@@ -1,0 +1,65 @@
+{% extends 'common/base.html' %}
+
+
+{% block title %}
+    个人中心
+{% endblock %}
+
+{% block page_content %}
+    {% if img_url %}
+        <a href="{{ url_for('users.change_icon') }}" title="修改头像"><img src="{{ img_url }}" alt="" class="img-circle"></a>
+    {% endif %}
+    <style>
+        .box {
+            width: 800px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        /* 指正常的未被访问过的链接*/
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        /*指已经访问过的链接*/
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /*指鼠标在链接*/
+
+
+        a:active {
+            text-decoration: none;
+        }
+
+        /* 指正在点的链接*/
+    </style>
+    <div class="container box">
+        <a href="#" title="修改用户名">
+            <div class="panel panel-success">
+                <div class="panel-heading"><h4>用户名：</h4></div>
+                <div class="panel-body">
+                    {{ current_user.username}}
+                </div>
+            </div>
+        </a>
+        <a href="#" title="修改邮箱">
+            <div class="panel panel-success">
+                <div class="panel-heading"><h4>邮箱：</h4></div>
+                <div class="panel-body">
+                    {{ current_user.email}}
+                </div>
+            </div>
+        </a>
+    </div>
+{% endblock %}

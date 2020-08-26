@@ -1,50 +1,31 @@
 {% extends 'common/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 
 {% block title %}
-博客注册
+欢迎注册
 {% endblock %}
 
-{% block content %}
-        <style>
-    .ibox{
-        width: 1000px;
-        height: 300px;
-        {#background: green;#}
-        {#text-align: center;#}
-    }
-</style>
-    <div class="container ibox center-block">
-    <form class="form-horizontal"style="width: 800px">
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" :focus="box-shadow" placeholder="用户名">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="邮箱">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">密&nbsp&nbsp&nbsp&nbsp码</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="密码">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="密码">
-    </div>
-  </div>
-   <div class="col-sm-offset-2 col-sm-10">
-        <a href="http://127.0.0.1:5056/users/register/"><button type="button" class="btn btn-default">注册</button></a>
-       <a href="http://127.0.0.1:5056/users/login/"><button type="button" class="btn btn-default">登录</button></a>
+{% block page_content %}
+    <style>
+        .box{
+            width: 600px;
+        }
+    </style>
+    <div class="container box">
+        {{ wtf.quick_form(form) }}
 
-    </div>
- </div>
+{#     <div class="input-group">#}
+{##}
+{#       <input id='location' class="form-control" onclick="$('#i-file').click();">#}
+{#           <label class="input-group-btn">#}
+{#               <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">#}
+{#           </label>#}
+{#       </div>#}
+{#   </div>#}
+{#   <input type="file" name="file" id='i-file'  accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">#}
+{#</div>#}
+{#    </div>#}
+
 
 {% endblock %}
