@@ -72,8 +72,8 @@ class User(db.Model,UserMixin):
     #判断是否收藏
     def is_favorite(self,pid):
         favorites = self.favorite.all()
-        posts = list(filter(lambda p: p.id == pid, favorites))
-        print(len(posts))
+        posts = list(filter(lambda p: p.id == int(pid), favorites))
+        # print(len(posts))
         if len(posts) > 0:
             return True
         else:
