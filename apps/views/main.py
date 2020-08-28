@@ -5,7 +5,7 @@
 @file:main.py
 @time:2020/8/24 16:23;
 """
-from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
+from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app,abort
 from apps.models import Posts
 from apps.forms import PostsFrom
 from flask_login import current_user, login_required
@@ -42,8 +42,12 @@ def index():
     return render_template('main/index.html', form=form, posts=posts, pagination=pagination)
 
 
-@mains.route('/details', methods=['GET', 'POST'])
-def details():
-    form = PostsFrom
-
-    return render_template('main/details.html',form=form)
+@mains.route('/details/<postid>/', methods=['GET', 'POST'])
+@login_required
+def details(postid):
+    post = Posts.query.get(postid)
+    # 如果没有帖子详情，那么就抛出404错误
+    if not post:
+        abort(404)
+    comments = Posts.query.filter_by(rid=postid).order_by(Posts.pub_time.desc()).all()
+    return render_template('main/details.html',post=post,comments=comments)

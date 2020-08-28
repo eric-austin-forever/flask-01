@@ -52,12 +52,21 @@ def logout_demo():
 
 
 
-@users.route('/profile/')
+@users.route('/profile/',methods=['GET','POST'])
 @login_required     # 装饰器必须写在路由的下面
 def profile():
-    form = RegisterFrom
+    # form = RegisterFrom
+    # form = ChangeNameForm()
     img_url = photos.url(current_user.icon)
-    return render_template('users/profile.html',img_url=img_url,form=form)
+
+    if request.method == 'POST':
+        change_username(request.form['new_name'])
+    return render_template('users/profile.html',img_url=img_url)
+
+
+
+
+
 
 @users.route('/register/',methods=['GET','POST'])
 def register():
@@ -129,9 +138,17 @@ def random_string(length=20):
 
 @users.route('/myblog/')
 def my_blog():
+    return '我的博客'
 
 
 
+def change_username(new_name):
 
+    user = User.query.get(current_user.id)
+    user.username = new_name
+
+    db.session.commit()
+
+    return render_template('users/profile.html')
 
 

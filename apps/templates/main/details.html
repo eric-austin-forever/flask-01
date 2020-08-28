@@ -2,14 +2,41 @@
 
 
 {% block title %}
-欢迎登录
+    欢迎登录
 {% endblock %}
 
 {% block page_content %}
     <style>
-        .box{
+        .box {
             width: 600px;
         }
+        .kbox {
+                background: forestgreen;
+                color: green;
+
+
+            }
+        .ibox {
+                width: 40px;
+            }
+
     </style>
     <h1>详情</h1>
+    <div class="panel panel-success">
+        <div class="panel-heading kbox" style="height: 70px">
+{#            <a href="{{ url_for('main.details',postid=p.id) }}">#}
+                <img class="media-object img-circle ibox"
+                     src="{{ url_for('static',filename='uploads/'+post.author.icon) }}" alt="头像">
+                {#                                    <div >{{ moment(p.pub_time).fromNow() }}</div>#}
+                <h4 class="media-heading qbox ">{{ post.author.username }}</h4>
+{#            </a>#}
+        </div>
+{#        <a href="{{ url_for('main.details') }}">#}
+            <div class="panel-body" style="height: 150px">
+                {{ post.content }}
+            </div>
+            <div>{{ moment(post.pub_time).fromNow() }}</div>
+
+{#        </a>#}
+    </div>
 {% endblock %}

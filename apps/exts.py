@@ -11,6 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_uploads import UploadSet,IMAGES,configure_uploads,patch_request_class
+from flask_moment import Moment
 
 
 # 实例化对象
@@ -20,6 +21,7 @@ db = SQLAlchemy()
 migrate = Migrate(db=db)
 login_manager = LoginManager()
 photos = UploadSet('photos',IMAGES,)
+moment = Moment()
 
 
 
@@ -32,6 +34,7 @@ def config_extensions(app):
     mail.init_app(app)
     db.init_app(app)
     migrate.init_app(app)
+    moment.init_app(app)
     login_manager.init_app(app)
     # 当我们发表博客，发现没有登录，跳转到登录界面
     login_manager.login_view = 'users.login'

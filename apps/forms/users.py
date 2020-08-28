@@ -44,3 +44,10 @@ class LoginFrom(FlaskForm):
 class UploadsForm(FlaskForm):
     icon = FileField('头像', validators=[FileRequired('请选择图片'),FileAllowed(photos,message='只能上传图片')], render_kw={"class": " btn btn-primary"})
     submit = SubmitField('立即提交')
+
+class ChangeNameForm(FlaskForm):
+    new_name = StringField('用户名', validators=[DataRequired(), Length(6, 20, message='用户名必须6-20位')],render_kw={"placeholder":"请输入用户名!"})
+    submit = SubmitField('立即提交')
+
+
+

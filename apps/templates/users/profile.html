@@ -7,7 +7,8 @@
 
 {% block page_content %}
     {% if img_url %}
-        <a href="{{ url_for('users.change_icon') }}" title="修改头像"><img src="{{ img_url }}" alt="" class="img-circle"></a>
+        <a href="{{ url_for('users.change_icon') }}" title="修改头像"><img src="{{ img_url }}" alt=""
+                                                                       class="img-circle"></a>
     {% endif %}
     <style>
         .box {
@@ -44,22 +45,91 @@
 
         /* 指正在点的链接*/
     </style>
+
     <div class="container box">
         <a href="#" title="修改用户名">
             <div class="panel panel-success">
                 <div class="panel-heading"><h4>用户名：</h4></div>
                 <div class="panel-body">
-                    {{ current_user.username}}
+                    {{ current_user.username }}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                data-whatever="@mdo" style="float: right">修改用户名
+        </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" url=""><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">修改用户名</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for('users.profile') }}" method="post">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">新用户名:</label>
+                                <input type="text" class="form-control" id="recipient-name" name="new_name">
+{#                                {{ form.new_name }}#}
+
+
+
+                            </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+{#                        {{ form.submit }}#}
+
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </a>
+
+
+
         <a href="#" title="修改邮箱">
             <div class="panel panel-success">
                 <div class="panel-heading"><h4>邮箱：</h4></div>
                 <div class="panel-body">
-                    {{ current_user.email}}
+                    {{ current_user.email }}
+                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                data-whatever="@mdo" style="float: right">修改邮箱
+        </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">新邮箱:</label>
+
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </a>
+
     </div>
 {% endblock %}

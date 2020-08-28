@@ -29,7 +29,7 @@
     {% block page_content %}
         <style>
             .box {
-                width: 600px;
+                width: 700px;
             }
 
             .ibox {
@@ -38,22 +38,26 @@
 
             .kbox {
                 background: forestgreen;
-            {#padding: 20px;#}
+                color: green;
 
 
             }
 
             .jbox {
-            {#width: 600px;#} margin-top: 30px;
+                margin-top: 30px;
             }
 
             .qbox {
+                list-style-type: none;
 
             }
 
-            .abox {
-
+            .qbox li {
+                float: left;
+                width: 20px;
+                margin-left: 10px;
             }
+
 
             a {
                 text-decoration: none;
@@ -63,6 +67,13 @@
             a:hover {
                 text-decoration: none;
             }
+
+            .panel > .panel-heading {
+                background-image: none;
+                background-color: #96D196;
+                color: white;
+
+            }
         </style>
         <div class="container box">
             {{ wtf.quick_form(form) }}
@@ -70,33 +81,44 @@
             {% for p in posts %}
 
                 <div class="media jbox">
-                    {#                    <div class="media-left media-middle">#}
-                    {#                        <a href="{{ url_for('main.details') }}">#}
-                    {#                            <img class="media-object img-circle ibox"#}
-                    {#                                 src="{{ url_for('static',filename='uploads/'+p.author.icon) }}" alt="头像">#}
-                    {#                            <h4 class="media-heading qbox " style="float: right">{{ p.author.username }}</h4>#}
-                    {#                        </a>#}
-                    {#                    </div>#}
-                    <a href="{{ url_for('main.details') }}" class="abox">
-                        {#                        <div class="media-body kbox">#}
-                        {##}
-                        {#                            {{ p.content }}#}
-                        {#                        </div>#}
-                        <div class="panel panel-info">
-                            <div class="panel-heading kbox" style="height: 70px">
-                                <a href="{{ url_for('main.details') }}">
-                                    <img class="media-object img-circle ibox"
-                                         src="{{ url_for('static',filename='uploads/'+p.author.icon) }}" alt="头像">
-                                    <h4 class="media-heading qbox ">{{ p.author.username }}</h4>
-                                </a>
-                            </div>
-                            <a href="{{ url_for('main.details') }}">
-                                <div class="panel-body" style="height: 150px">
-                                    {{ p.content }}
-                                </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading kbox" style="height: 70px">
+                            <a href="{{ url_for('main.details',postid=p.id) }}">
+                                <img class="media-object img-circle ibox"
+                                     src="{{ url_for('static',filename='uploads/'+p.author.icon) }}" alt="头像">
+
+                                <h4 class="media-heading  ">{{ p.author.username }}</h4>
                             </a>
                         </div>
-                    </a>
+                        <a href="{{ url_for('main.details',postid=p.id) }}">
+                            <div class="panel-body" style="height: 150px">
+                                {{ p.content }}
+                            </div>
+                        </a>
+                        <div>{{ moment(p.pub_time).fromNow() }}
+                            <div style="float: right">
+                                <ul class="qbox">
+                                    <li><div url="" class="like" style="cursor: pointer"><img src="{{ url_for('static',filename='images/dz.jpg') }}" alt=""
+                                                        width="100%" title="赞我"></div>
+                                    </li>
+                                    <li><a href=""><img src="{{ url_for('static',filename='images/pl.jpg') }}" alt=""
+                                                        width="120%" title="评论我"></a>
+                                    </li>
+                                    <li>
+                                        <div url="{{ url_for('posts.collect',pid = p.id) }}" class="collect"
+                                             style="cursor: pointer">
+
+                                            <img src="{{ url_for('static',filename='images/sc.jpg') }}" alt=""
+                                                 width="100%" title="收藏我" class="al"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
 
@@ -109,6 +131,49 @@
         {{ pagination_show(pagination,'main.index') }}
 
 
-
     {% endblock %}
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        $(function () {
+            $(".collect").click(function () {
+                _this = this
+                {#alert($(_this).children("img").attr('src'))#}
+                $.get($(_this).attr('url'), function (data) {
+                    {#alert($('.al').attr('src'))#}
+                    if (data['result'] == 'ok') {
+
+                        if ($(_this).children("img").attr('src') == '/static/images/sc.jpg') {
+                            $(_this).children("img").attr('src', '/static/images/ysc.jpg')
+
+                        } else {
+                            $(_this).children("img").attr('src', '/static/images/sc.jpg')
+                        }
+                    }
+                });
+            })
+        })
+
+        $(function () {
+            $(".like").click(function () {
+                _this = this
+                {#alert($(_this).children("img").attr('src'))#}
+                $.get($(_this).attr('url'), function (data) {
+                    {#alert($('.al').attr('src'))#}
+                    if (1 == 1) {
+
+                        if ($(_this).children("img").attr('src') == '/static/images/dz.jpg') {
+                            $(_this).children("img").attr('src', '/static/images/ydz.jpg')
+
+                        } else {
+                            $(_this).children("img").attr('src', '/static/images/dz.jpg')
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock %}
+

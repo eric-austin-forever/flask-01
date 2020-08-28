@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from flask_login import UserMixin
+from .posts import Posts
 
 
 
@@ -22,6 +23,9 @@ class User(db.Model,UserMixin):
     # 是否激活
     confirmed = db.Column(db.Boolean,default=False)
     icon = db.Column(db.String(128),default='default.jpg')
+
+    # 添加收藏功能
+    favorite = db.relationship('Posts',secondary='collections',backref=db.backref('usered',lazy='dynamic'),lazy='dynamic')
 
     @property   # 把方法当成属性调用
     def password(self):
@@ -65,7 +69,29 @@ class User(db.Model,UserMixin):
             db.session.commit()
         return True
 
+    #判断是否收藏
+    def is_favorite(self,pid):
+        favorites = self.favorite.all()
+        posts = list(filter(lambda p: p.id == pid, favorites))
+        print(len(posts))
+        if len(posts) > 0:
+            return True
+        else:
+            return False
 
+
+    def add_favorite(self,pid):
+        p = Posts.query.get(pid)
+        self.favorite.append(p)
+        db.session.commit()
+
+
+
+
+    def del_favorite(self,pid):
+        p = Posts.query.get(pid)
+        self.favorite.remove(p)
+        db.session.commit()
 # 登录认证的回调
 # 登录成功以后存的是用的id
 # 需要一个方法根据用户的id 取出用户的详细信息
